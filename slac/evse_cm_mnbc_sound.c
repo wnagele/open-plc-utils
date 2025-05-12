@@ -153,11 +153,13 @@ signed evse_cm_mnbc_sound (struct session * session, struct channel * channel, s
 
 #endif
 
-				for (session->NumGroups = 0; session->NumGroups < indicate->NumGroups; session->NumGroups++)
+				// QCA7420 does not send this data, so fake some attenuation data.
+				// This would normally identify the connected EVSE from multiple EVSEs.
+				// For this test there is anyhow only one EVSE.
+				for (session->NumGroups = 0; session->NumGroups < SLAC_GROUPS; session->NumGroups++)
 				{
-					AAG [session->NumGroups] += indicate->AAG [session->NumGroups];
+					AAG [session->NumGroups] += 19; // 19db
 				}
-				session->NumGroups = indicate->NumGroups;
 				session->sounds++;
 			}
 		}
